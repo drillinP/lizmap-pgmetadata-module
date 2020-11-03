@@ -11,7 +11,8 @@
 class search {
 
   protected $sql = array(
-    'idvoie'=>'SELECT pgmetadata.get_dataset_item_html_content($1, $2, $3)'
+    'getDataset' => "SELECT tablename FROM pg_tables WHERE schemaname = 'pgmetadata' AND tablename = 'dataset'",
+    'getHtml'=>'SELECT pgmetadata.get_dataset_item_html_content($1, $2)'
   );
 
   protected function getSql($option) {
@@ -19,13 +20,16 @@ class search {
         return $this->sql[$option];
       }
       return Null;
-    }
+  }
 
   function query( $sql, $filterParams, $profile='pgmetadata' ) {
       $cnx = jDb::getConnection( $profile );
       $resultset = $cnx->prepare( $sql );
-
-      $resultset->execute( $filterParams );
+      if(empty($filterParams)){
+        $resultset->execute();
+      }else{
+        $resultset->execute( $filterParams );
+      }
       return $resultset;
   }
 
@@ -37,12 +41,7 @@ class search {
   * @param srid Cordiante system identifier
   */
 
-  function getData($repository, $project, $layer, $filterParams, $option) {
-
-        $profile = pgmetadataProfile::get($repository, $project, $layer);
-        $this->repository = $repository;
-        $this->project = $project;
-
+  function getData($profile, $filterParams, $option) {
         // Run query
         $sql = $this->getSql($option);
         if(!$sql){
