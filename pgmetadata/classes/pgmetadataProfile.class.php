@@ -11,7 +11,7 @@
 class pgmetadataProfile {
 
     /**
-    * Get the Name of the cadastre DB profile
+    * Get the Name of the pgmetadata DB profile
     * @param project Project key
     * @param repository Repository key
     * @param layerName Name of the Parcelle layer

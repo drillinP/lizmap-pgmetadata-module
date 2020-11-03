@@ -1,7 +1,7 @@
 <?php
 /**
 * @package   lizmap
-* @subpackage adresse
+* @subpackage pgmetadata
 * @author    your name
 * @copyright 2011-2019 3liz
 * @link      https://3liz.com
@@ -9,7 +9,7 @@
 */
 
 
-class adresseModuleInstaller extends jInstallerModule {
+class pgmetadataModuleInstaller extends jInstallerModule {
 
     function install() {
         //if ($this->firstDbExec())
