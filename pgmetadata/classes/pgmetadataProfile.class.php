@@ -18,7 +18,8 @@ class pgmetadataProfile {
     * @param profile The default cadastre DB profile
     * @return Name of the cadastre DB profile
     */
-    public static function get($repository, $project, $layerName, $profile = 'pgmetadata') {
+    public static function get($repository, $project, $layerName) {
+        $profile = 'pgmetadata';
         $p = lizmap::getProject($repository.'~'.$project);
         $layer = $p->findLayerByName($layerName);
         if($layer){

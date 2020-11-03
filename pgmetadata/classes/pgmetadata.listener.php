@@ -16,7 +16,6 @@ class pgmetadataListener extends jEventListener{
 
        $pgmetadataConfig = array();
 
-       $pgmetadataConfig['nomdedecouche'] = 'test';
        $pgmetadataConfig['urls']['index'] = jUrl::get('pgmetadata~service:index');
 
        $js = array();

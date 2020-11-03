@@ -12,7 +12,22 @@ var lizPgmetadata = function() {
   lizMap.events.on({
     'lizmapswitcheritemselected': function(evt){
       console.log(evt);
-    }
+      var options = {
+        repository: lizUrls.params.repository,
+        project: lizUrls.params.project,
+        layername: ''+evt.name
+      };
+      var url = pgmetadataConfig['urls']['index'];
+         $.getJSON(
+             url,
+             options,
+             function( data, status, xhr ) {
+                 if(data){
+                     console.log(data);
+                 }
+             }
+         );
+        }
   });
   return {};
 }();
