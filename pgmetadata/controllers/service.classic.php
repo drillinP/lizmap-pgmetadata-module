@@ -10,10 +10,10 @@
 
 class serviceCtrl extends jController {
 
-  function select(){
-    $rep = $this->getResponse('json');
-    $rep->data = "{'test': 'test'}";
-    return $rep;
+  function index(){
+      $rep = $this->getResponse('html');
+      $rep->addContent('<p>Test</p>');
+      return $rep;
   }
 
 }

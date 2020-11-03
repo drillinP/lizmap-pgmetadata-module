@@ -11,7 +11,7 @@
 class search {
 
   protected $sql = array(
-    'idvoie'=>'SQL Query'
+    'idvoie'=>'SELECT pgmetadata.get_dataset_item_html_content($1, $2, $3)'
   );
 
   protected function getSql($option) {

@@ -7,4 +7,12 @@
 * @license    Mozilla Public Licence
 */
 
-console.log('PGMETADATA');
+var lizPgmetadata = function() {
+  console.log('PGMETADATA');
+  lizMap.events.on({
+    'lizmapswitcheritemselected': function(evt){
+      console.log(evt);
+    }
+  });
+  return {};
+}();
