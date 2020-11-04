@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module xmlns="http://jelix.org/ns/module/1.0">
+<module xmlns="https://jelix.org/ns/module/1.0">
     <info id="pgmetadata3liz.com" name="pgmetadata" createdate="2020-11-02">
         <version date="2020-11-02">0.0.1</version>
         <label lang="en_US">pgmetadata</label>
@@ -8,7 +8,7 @@
         <copyright>2011-2019 3liz</copyright>
         <creator name="3liz" email="info@3liz.com" />
         <!--<contributor name="hisname" email="hisemail@yoursite.undefined"  since="" role=""/>-->
-        <homepageURL>http://3liz.com</homepageURL>
+        <homepageURL>https://3liz.com</homepageURL>
     </info>
     <dependencies>
         <jelix minversion="1.6.26" maxversion="1.6.*"/>
