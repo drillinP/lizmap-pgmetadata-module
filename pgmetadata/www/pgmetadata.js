@@ -8,26 +8,45 @@
 */
 
 var lizPgmetadata = function() {
-  console.log('PGMETADATA');
-  lizMap.events.on({
-    'lizmapswitcheritemselected': function(evt){
-      console.log(evt);
-      var options = {
-        repository: lizUrls.params.repository,
-        project: lizUrls.params.project,
-        layername: ''+evt.name
-      };
-      var url = pgmetadataConfig['urls']['index'];
-         $.getJSON(
-             url,
-             options,
-             function( data, status, xhr ) {
-                 if(data){
-                     console.log(data);
-                 }
-             }
-         );
+
+    lizMap.events.on({
+        'lizmapswitcheritemselected': function(evt){
+            if (evt.selected) {
+                var layername = lizMap.getLayerNameByCleanName(evt.name);
+                get_metadata_html(layername);
+            }
         }
-  });
-  return {};
+    });
+
+    function get_metadata_html(layername) {
+        var options = {
+            repository: lizUrls.params.repository,
+            project: lizUrls.params.project,
+            layername: layername
+        };
+        var url = pgmetadataConfig['urls']['index'];
+        $.getJSON(
+            url,
+            options,
+            function( data, status, xhr ) {
+                if (data){
+                    if (data.status == 'error') {
+                        console.log(data.message);
+                    } else {
+                        set_metadata_in_subdock(data.html);
+                    }
+                }
+            }
+        );
+    }
+
+    function set_metadata_in_subdock(html) {
+        if (html) {
+            console.log('html has content: need to fill in subdock Metadata content with HTML');
+        } else {
+            console.log('html is null: need to erase subdock Metadata content');
+        }
+    }
+
+    return {};
 }();
