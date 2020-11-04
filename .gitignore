@@ -1,0 +1,5 @@
+# IDEA
+.idea/
+
+# PHP
+.php_cs.cache
