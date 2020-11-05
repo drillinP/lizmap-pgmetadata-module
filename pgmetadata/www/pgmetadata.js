@@ -8,9 +8,9 @@
 */
 
 var lizPgmetadata = function() {
-
     lizMap.events.on({
         'lizmapswitcheritemselected': function(evt){
+            console.log(pgmetadataLocales['ui.button.pgmetadataHtml'] );
             if (evt.selected) {
                 var layername = lizMap.getLayerNameByCleanName(evt.name);
                 get_metadata_html(layername);
@@ -40,15 +40,6 @@ var lizPgmetadata = function() {
         );
     }
 
-    function hideFunction() {
-        var x = document.getElementById("pgmetadata-content");
-        if (x.style.display === "none") {
-          x.style.display = "block";
-        } else {
-          x.style.display = "none";
-        }
-    }
-
     function set_metadata_in_subdock(html) {
         if (html) {
             console.log('html has content: need to fill in subdock Metadata content with HTML');
@@ -60,7 +51,7 @@ var lizPgmetadata = function() {
             content = subdock.find('div[class="menu-content"]');
 
             // create button
-            var btn = $('<button onClick="hideFunction()">Fiche détails</button>');
+            var btn = $('<button>'+ pgmetadataLocales['ui.button.pgmetadataHtml'] +'</button>');
             btn.addClass("btn btn-mini pgmetadata-button");
 
             // Add button and html to subdock

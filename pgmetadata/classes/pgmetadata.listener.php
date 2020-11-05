@@ -22,8 +22,12 @@ class pgmetadataListener extends jEventListener
         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'pgmetadata', 'file' => 'pgmetadata.js'));
 
         $jscode = array(
-            'var pgmetadataConfig = '.json_encode($pgmetadataConfig),
+            'var pgmetadataConfig = '.json_encode($pgmetadataConfig).';',
         );
+
+        // Add translation
+        $locales = $this->getLocales();
+        $jscode[] = 'var pgmetadataLocales = '.json_encode($locales).';';
 
         $event->add(
             array(
@@ -31,5 +35,29 @@ class pgmetadataListener extends jEventListener
                 'jscode' => $jscode,
             )
         );
+    }
+
+    private function getLocales($lang = null)
+    {
+
+        if (!$lang) {
+            $lang = jLocale::getCurrentLang().'_'.jLocale::getCurrentCountry();
+        }
+
+        $data = array();
+        $path = jApp::getModulePath('pgmetadata').'locales/'.$lang.'/pgmetadata.UTF-8.properties';
+        if (file_exists($path)) {
+            $lines = file($path);
+            foreach ($lines as $lineNumber => $lineContent) {
+                if (!empty($lineContent) and $lineContent != '\n') {
+                    $exp = explode('=', trim($lineContent));
+                    if (!empty($exp[0])) {
+                        $data[$exp[0]] = jLocale::get('pgmetadata~pgmetadata.'.$exp[0], null, $lang);
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 }
