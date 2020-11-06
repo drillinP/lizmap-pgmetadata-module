@@ -39,7 +39,6 @@ class pgmetadataListener extends jEventListener
 
     private function getLocales($lang = null)
     {
-
         if (!$lang) {
             $lang = jLocale::getCurrentLang().'_'.jLocale::getCurrentCountry();
         }

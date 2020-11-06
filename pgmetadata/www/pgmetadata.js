@@ -25,55 +25,33 @@ var lizPgmetadata = function() {
             layername: layername
         };
         var url = pgmetadataConfig['urls']['index'];
-        $.getJSON(
-            url,
-            options,
-            function( data, status, xhr ) {
-                if (data){
-                    if (data.status == 'error') {
-                        console.log(data.message);
-                    } else {
-                        set_metadata_in_subdock(data.html);
-                    }
+        url = url + '?' + new URLSearchParams(options);
+        fetch(url).then(function(response) {
+            return response.json();
+        }).then(function(formdata) {
+            if (formdata){
+                if (formdata.status == 'error') {
+                    console.log(formdata.message);
+                } else {
+                    set_metadata_in_subdock(formdata.html);
                 }
             }
-        );
+        });
     }
 
-    function set_metadata_in_subdock(html) {
-        if (html) {
+    function set_metadata_in_subdock(html){
+        if(html){
             console.log('html has content: need to fill in subdock Metadata content with HTML');
             // Add html content in div
             html = '<div id="pgmetadata-content">'+ html +'</div>';
 
             // Get subdock
-            var subdock = $('.sub-metadata');
-            content = subdock.find('div[class="menu-content"]');
+            document.querySelector('#sub-dock .menu-content').insertAdjacentHTML('beforeend', '<details class="pg-metadata"> <summary> '+ pgmetadataLocales['ui.button.pgmetadataHtml'] +' </summary>  </details>');
 
-            // create button
-            var btn = $('<button>'+ pgmetadataLocales['ui.button.pgmetadataHtml'] +'</button>');
-            btn.addClass("btn btn-mini pgmetadata-button");
-
-            // Add button and html to subdock
-            content.append(btn);
-            content.append(html);
-
-            // get and hide content
-            var x = document.getElementById("pgmetadata-content");
-            x.style.display = "none";
-
-            // adding showing / hiding on click
-            btn.click(function(){
-                if (x.style.display === "none") {
-                    x.style.display = "block";
-                } else {
-                    x.style.display = "none";
-                }
-            });
+            document.querySelector('#sub-dock .menu-content .pg-metadata').insertAdjacentHTML('beforeend', html);
         } else {
             console.log('html is null: need to erase subdock Metadata content');
         }
-    }
-
+    }    
     return {};
 }();
