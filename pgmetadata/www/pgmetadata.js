@@ -10,7 +10,6 @@
 var lizPgmetadata = function() {
     lizMap.events.on({
         'lizmapswitcheritemselected': function(evt){
-            console.log(pgmetadataLocales['ui.button.pgmetadataHtml'] );
             if (evt.selected) {
                 var layername = lizMap.getLayerNameByCleanName(evt.name);
                 get_metadata_html(layername);
@@ -43,12 +42,12 @@ var lizPgmetadata = function() {
         if(html){
             console.log('html has content: need to fill in subdock Metadata content with HTML');
             // Add html content in div
-            html = '<div id="pgmetadata-content">'+ html +'</div>';
+            html = html;
 
             // Get subdock
             document.querySelector('#sub-dock .menu-content').insertAdjacentHTML('beforeend', '<details class="pg-metadata"> <summary> '+ pgmetadataLocales['ui.button.pgmetadataHtml'] +' </summary>  </details>');
 
-            document.querySelector('#sub-dock .menu-content .pg-metadata').insertAdjacentHTML('beforeend', html);
+            document.querySelector('#sub-dock .sub-metadata .pg-metadata').insertAdjacentHTML('beforeend', html);
         } else {
             console.log('html is null: need to erase subdock Metadata content');
         }

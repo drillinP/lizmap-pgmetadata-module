@@ -21,6 +21,9 @@ class pgmetadataListener extends jEventListener
         $js = array();
         $js[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'pgmetadata', 'file' => 'pgmetadata.js'));
 
+        $css = array();
+        $css[] = jUrl::get('jelix~www:getfile', array('targetmodule' => 'pgmetadata', 'file' => 'pgmetadata.css'));
+
         $jscode = array(
             'var pgmetadataConfig = '.json_encode($pgmetadataConfig).';',
         );
@@ -33,6 +36,7 @@ class pgmetadataListener extends jEventListener
             array(
                 'js' => $js,
                 'jscode' => $jscode,
+                'css' => $css,
             )
         );
     }
