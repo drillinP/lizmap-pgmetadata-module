@@ -10,7 +10,10 @@
         "SharedArrayBuffer": "readonly",
         "OpenLayers": "readonly",
         "lizMap": "readonly",
-        "lizUrls": "readonly"
+        "lizUrls": "readonly",
+        "pgmetadataLocales": "readonly",
+        "pgmetadataConfig": "readonly"
+
     },
     "parserOptions": {
         "ecmaVersion": 2018,

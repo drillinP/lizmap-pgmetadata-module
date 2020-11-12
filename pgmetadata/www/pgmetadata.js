@@ -6,8 +6,7 @@
 * @link      https://3liz.com
 * @license    Mozilla Public Licence
 */
-
-var lizPgmetadata = function() {
+(function() {
     lizMap.events.on({
         'lizmapswitcheritemselected': function(evt){
             if (evt.selected) {
@@ -23,6 +22,7 @@ var lizPgmetadata = function() {
             project: lizUrls.params.project,
             layername: layername
         };
+
         var url = pgmetadataConfig['urls']['index'];
         url = url + '?' + new URLSearchParams(options);
         fetch(url).then(function(response) {
@@ -39,18 +39,18 @@ var lizPgmetadata = function() {
     }
 
     function set_metadata_in_subdock(html){
-        if(html){
-            console.log('html has content: need to fill in subdock Metadata content with HTML');
-            // Add html content in div
-            html = html;
+        if (html) {
+            // Build metadata panel opener
+            let opener = '<details class="pg-metadata"> <summary> ';
+            opener+= pgmetadataLocales['ui.button.pgmetadataHtml'];
+            opener+= ' </summary>  </details>';
 
-            // Get subdock
-            document.querySelector('#sub-dock .menu-content').insertAdjacentHTML('beforeend', '<details class="pg-metadata"> <summary> '+ pgmetadataLocales['ui.button.pgmetadataHtml'] +' </summary>  </details>');
+            // Add metadata opener
+            document.querySelector('#sub-dock .menu-content').insertAdjacentHTML('beforeend', opener);
 
+            // Add metadata content
             document.querySelector('#sub-dock .sub-metadata .pg-metadata').insertAdjacentHTML('beforeend', html);
-        } else {
-            console.log('html is null: need to erase subdock Metadata content');
         }
-    }    
+    }
     return {};
-}();
+})();

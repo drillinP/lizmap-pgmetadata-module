@@ -1,4 +1,28 @@
+#sub-dock .pg-metadata {
+    font-size: 0.8em;
+    margin-top: 5px;
+}
 #sub-dock .pg-metadata h3{
-    color: black;
-    text-decoration: underline;
+    color: rgb(51, 51, 51);
+    background: lightgray;
+    padding: 5px;
+    border: none;
+    font-weight: bold !important;
+}
+
+#sub-dock .pg-metadata summary{
+    cursor: pointer;
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.1em;
+}
+
+details.pg-metadata[open]{
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
+}
+
+details.pg-metadata[open] summary {
+    border: 0 !important;
 }
