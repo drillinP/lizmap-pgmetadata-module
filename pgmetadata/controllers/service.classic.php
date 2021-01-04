@@ -99,14 +99,28 @@ class serviceCtrl extends jController
             return $rep;
         }
 
+        // Array of avaibles locales
+        $available_locales = array('en', 'fr');
         // Get Locale for the html langage
-        $filterParams[] = jLocale::getCurrentLang();
+        // Jelix sanitizes the locale. No need to validate the string given by jLocale
+        $locale = jLocale::getCurrentLang();
+
+        $filterParams[] = $locale;
 
         // Get metadata HTML content for the layer
         try {
             $result = $autocomplete->getData($profile, $filterParams, 'get_html');
         } catch (Exception $e) {
-            $rep->data = array('status' => 'error', 'message' => 'Impossible to generate the Html to '.$layername);
+            if ($e->getCode() === 403) {
+                $filterParams = array($filterParams[0], $filterParams[1]);
+                $result = $autocomplete->getData($profile, $filterParams, 'get_html_default');
+            } else {
+                $rep->data = array('status' => 'error', 'message' => $e->getMessage());
+
+                return $rep;
+            }
+        } catch (Exception $e) {
+            $rep->data = array('status' => 'error', 'message' => $e->getMessage());
 
             return $rep;
         }
@@ -122,6 +136,7 @@ class serviceCtrl extends jController
 
         // Return  HTML
         $rep->data = array('status' => 'success', 'html' => $feature->html);
+
         return $rep;
     }
 }
