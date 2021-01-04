@@ -99,6 +99,9 @@ class serviceCtrl extends jController
             return $rep;
         }
 
+        // Get Locale for the html langage
+        $filterParams[] = jLocale::getCurrentLang();
+
         // Get metadata HTML content for the layer
         try {
             $result = $autocomplete->getData($profile, $filterParams, 'get_html');
@@ -119,7 +122,6 @@ class serviceCtrl extends jController
 
         // Return  HTML
         $rep->data = array('status' => 'success', 'html' => $feature->html);
-
         return $rep;
     }
 }

@@ -6,9 +6,9 @@
 * @link      https://3liz.com
 * @license    Mozilla Public Licence
 */
-(function() {
+(function () {
     lizMap.events.on({
-        'lizmapswitcheritemselected': function(evt){
+        'lizmapswitcheritemselected': function (evt) {
             if (evt.selected) {
                 var layername = lizMap.getLayerNameByCleanName(evt.name);
                 get_metadata_html(layername);
@@ -25,10 +25,10 @@
 
         var url = pgmetadataConfig['urls']['index'];
         url = url + '?' + new URLSearchParams(options);
-        fetch(url).then(function(response) {
+        fetch(url).then(function (response) {
             return response.json();
-        }).then(function(formdata) {
-            if (formdata){
+        }).then(function (formdata) {
+            if (formdata) {
                 if (formdata.status == 'error') {
                     console.log(formdata.message);
                 } else {
@@ -38,12 +38,12 @@
         });
     }
 
-    function set_metadata_in_subdock(html){
+    function set_metadata_in_subdock(html) {
         if (html) {
             // Build metadata panel opener
             let opener = '<details class="pg-metadata"> <summary> ';
-            opener+= pgmetadataLocales['ui.button.pgmetadataHtml'];
-            opener+= ' </summary>  </details>';
+            opener += pgmetadataLocales['ui.button.pgmetadataHtml'];
+            opener += ' </summary>  </details>';
 
             // Add metadata opener
             document.querySelector('#sub-dock .menu-content').insertAdjacentHTML('beforeend', opener);

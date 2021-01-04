@@ -11,7 +11,7 @@ class search
 {
     protected $sql = array(
         'check_dataset' => "SELECT tablename FROM pg_tables WHERE schemaname = 'pgmetadata' AND tablename = 'dataset'",
-        'get_html' => 'SELECT pgmetadata.get_dataset_item_html_content($1, $2) AS html',
+        'get_html' => 'SELECT pgmetadata.get_dataset_item_html_content($1, $2, $3) AS html',
     );
 
     protected function getSql($option)
