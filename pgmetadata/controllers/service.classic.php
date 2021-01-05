@@ -85,54 +85,62 @@ class serviceCtrl extends jController
         // Check if pgmetadata.dataset exists in the layer database
         $autocomplete = jClasses::getService('pgmetadata~search');
 
-        try {
-            $result = $autocomplete->getData($profile, array(), 'check_dataset');
-            $fetch = $result->fetchAll();
-            if (empty($fetch)) {
-                $rep->data = array('status' => 'error', 'message' => 'Table pgmetadata.dataset does not exist in the layer database');
+        $result = $autocomplete->getData($profile, array(), 'check_dataset');
+        if (isset($result['status'])) {
+            $rep->data = $result;
 
-                return $rep;
-            }
-        } catch (Exception $e) {
+            return $rep;
+        }
+
+        if (empty($result)) {
             $rep->data = array('status' => 'error', 'message' => 'Table pgmetadata.dataset does not exist in the layer database');
 
             return $rep;
         }
 
-        // Array of avaibles locales
-        $available_locales = array('en', 'fr');
         // Get Locale for the html langage
         // Jelix sanitizes the locale. No need to validate the string given by jLocale
         $locale = jLocale::getCurrentLang();
 
         $filterParams[] = $locale;
 
-        // Get metadata HTML content for the layer
-        try {
-            $result = $autocomplete->getData($profile, $filterParams, 'get_html');
-        } catch (Exception $e) {
-            if ($e->getCode() === 403) {
-                $filterParams = array($filterParams[0], $filterParams[1]);
-                $result = $autocomplete->getData($profile, $filterParams, 'get_html_default');
-            } else {
-                $rep->data = array('status' => 'error', 'message' => $e->getMessage());
+        // Init option fot get_html query
+        $option = 'get_html';
 
-                return $rep;
-            }
-        } catch (Exception $e) {
-            $rep->data = array('status' => 'error', 'message' => $e->getMessage());
+        // Get datatbase version
+        $result = $autocomplete->getData($profile, array(), 'get_version');
+
+        // Check if getData don't return an error
+        // If $result['status'] is define there is an error
+        if (isset($result['status'])) {
+            $rep->data = $result;
+
+            return $rep;
+        }
+
+        // Check if nothing was returned
+        if (count($result) == 0) {
+            $option = 'get_html_default';
+        }
+
+        // Get metadata HTML content for the layer
+        $result = $autocomplete->getData($profile, $filterParams, $option);
+
+        // Check if getData don't return an error
+        // If $result['status'] is define there is an error
+        if (isset($result['status'])) {
+            $rep->data = $result;
 
             return $rep;
         }
 
         // Check content and return
-        $fetch = $result->fetchAll();
-        if (count($fetch) == 0) {
+        if (count($result) == 0) {
             $rep->data = array('status' => 'error', 'message' => 'No line returned by the query');
 
             return $rep;
         }
-        $feature = $fetch[0];
+        $feature = $result[0];
 
         // Return  HTML
         $rep->data = array('status' => 'success', 'html' => $feature->html);
