@@ -1,0 +1,8 @@
+parameters:
+  scanDirectories:
+    - pgmetadata/
+  level: 0
+  ignoreErrors:
+  paths:
+    - pgmetadata/
+  
